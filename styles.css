@@ -146,6 +146,12 @@ body {
     font-weight: 600;
 }
 
+.company-logo {
+    height: 40px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
 .top-bar-right {
     display: flex;
     align-items: center;
