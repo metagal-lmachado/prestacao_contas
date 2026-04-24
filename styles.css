@@ -199,20 +199,21 @@ body {
     color: var(--text-light);
 }
 
-.user-profile {
+.page-brand {
     display: flex;
     align-items: center;
-    gap: 0;
-    padding: 4px;
-    border-radius: 8px;
-    background-color: transparent;
+    gap: 14px;
 }
 
-.brand-logo {
+.page-logo {
     display: block;
-    width: 38px;
-    height: 38px;
+    width: 56px;
+    height: 56px;
     object-fit: contain;
+}
+
+.page-title {
+    font-size: 2rem;
 }
 
 /* Page Container */

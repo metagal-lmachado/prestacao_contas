@@ -1087,16 +1087,16 @@ function fecharModal() {
 
 // Exportar CSV
 function exportarCSV() {
-    let csv = 'Data,Funcionário,Departamento,Modalidade,Categoria,Descrição,Valor\n';
+    let csv = '\ufeffData;Funcionário;Departamento;Modalidade;Categoria;Descrição;Valor\n';
     
     dadosFiltrados.forEach(d => {
         const data = parseDataBR(d.data);
         const dataFormatada = data ? data.toLocaleDateString('pt-BR') : d.data;
-        const valor = parseNumero(d.valor).toLocaleString('pt-BR', { 
+        const valor = parseNumero(d.valor).toLocaleString('en-US', { 
             minimumFractionDigits: 2, 
             maximumFractionDigits: 2 
         });
-        csv += `${dataFormatada},${d.nome_funcionario},${d.departamento},${d.modalidade},${d.categoria_despesa},"${d.descricao_despesa}",${valor}\n`;
+        csv += `${dataFormatada};${d.nome_funcionario};${d.departamento};${d.modalidade};${d.categoria_despesa};"${d.descricao_despesa}";${valor}\n`;
     });
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
