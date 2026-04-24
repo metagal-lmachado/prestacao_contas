@@ -39,18 +39,17 @@
             <!-- Top Bar -->
             <header class="top-bar">
                 <div class="top-bar-left">
-                    <div class="page-brand">
-                        <img src="LOGO.png" alt="Logo" class="page-logo">
-                        <h1 class="page-title">Dashboard de Despesas</h1>
-                    </div>
+                    <h1 class="page-title">Dashboard de Despesas</h1>
                 </div>
                 <div class="top-bar-right">
                     <div class="search-box">
                         <input type="text" placeholder="Buscar..." class="search-input">
                         <span class="search-icon">🔍</span>
+                    </div>                    <button id="btn-carregar-csv" class="btn-load-csv">📄 Carregar CSV</button>
+                    <input type="file" id="input-csv" accept=".csv" hidden>                    <div class="user-profile">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%232d5016'/%3E%3C/svg%3E" alt="Avatar" class="avatar">
+                        <span class="user-name">Admin</span>
                     </div>
-                    <button id="btn-carregar-csv" class="btn-load-csv">📄 Carregar CSV</button>
-                    <input type="file" id="input-csv" accept=".csv" hidden>
                 </div>
             </header>
 
