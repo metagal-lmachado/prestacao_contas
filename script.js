@@ -292,6 +292,7 @@ function inicializarEventos() {
     document.getElementById('btn-prev-page').addEventListener('click', paginaAnterior);
     document.getElementById('btn-next-page').addEventListener('click', proximaPagina);
     document.getElementById('btn-filtrar-mensal').addEventListener('click', filtrarMensal);
+    document.getElementById('btn-limpar-periodo').addEventListener('click', limparPeriodo);
 
     // Modal
     document.querySelector('.modal-close').addEventListener('click', fecharModal);
@@ -326,7 +327,15 @@ function filtrarMensal() {
     const end = document.getElementById('date-range-end').value;
     mensalStart = start ? new Date(start + 'T00:00:00') : null;
     mensalEnd = end ? new Date(end + 'T23:59:59') : null;
-    atualizarGraficoMensal();
+    aplicarFiltros();
+}
+
+// Limpar período selecionado
+function limparPeriodo() {
+    mensalStart = null;
+    mensalEnd = null;
+    calcularDatasMensal();
+    aplicarFiltros();
 }
 
 // Preencher dropdowns de filtros
@@ -373,7 +382,14 @@ function aplicarFiltros() {
             (d.nome_funcionario && d.nome_funcionario.toLowerCase().includes(termoBusca)) ||
             (d.departamento && d.departamento.toLowerCase().includes(termoBusca));
 
-        return matchCategoria && matchDepartamento && matchFuncionario && matchModalidade && matchBusca;
+        // Incluir filtro de período
+        let matchPeriodo = true;
+        if (mensalStart && mensalEnd) {
+            const data = parseDataBR(d.data);
+            matchPeriodo = data && data >= mensalStart && data <= mensalEnd;
+        }
+
+        return matchCategoria && matchDepartamento && matchFuncionario && matchModalidade && matchBusca && matchPeriodo;
     });
 
     dadosFiltradosLancamentos = [...dadosFiltrados];
@@ -389,6 +405,11 @@ function limparFiltros() {
     document.getElementById('filter-funcionario').value = '';
     document.getElementById('filter-modalidade').value = '';
     document.querySelector('.search-input').value = '';
+    
+    // Limpar também o período mensal
+    mensalStart = null;
+    mensalEnd = null;
+    calcularDatasMensal();
     
     dadosFiltrados = [...dados];
     dadosFiltradosLancamentos = [...dados];
@@ -821,7 +842,7 @@ function atualizarGraficoMensal() {
         mensalEnd = end;
         document.getElementById('date-range-start').value = start.toISOString().split('T')[0];
         document.getElementById('date-range-end').value = end.toISOString().split('T')[0];
-        atualizarGraficoMensal();
+        aplicarFiltros();
     };
 
     atualizarLegenda('legend-mensal', ['Despesas mensais'], ['rgba(45, 80, 22, 0.7)']);

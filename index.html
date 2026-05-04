@@ -32,6 +32,37 @@
                     </li>
                 </ul>
             </nav>
+
+            <!-- Modalidades Card in Sidebar -->
+            <div class="sidebar-modal">
+                <div class="card card-modal">
+                    <div class="card-header">
+                        <h3 class="card-title">Modalidades</h3>
+                        <span class="card-icon">🎫</span>
+                    </div>
+                    <div class="modalidade-panel">
+                        <div class="option-buttons">
+                            <button id="btn-modal-quantidade" class="option-button active">Quantidade</button>
+                            <button id="btn-modal-valor" class="option-button">Valor</button>
+                        </div>
+                        <div class="modalidade-grid">
+                            <div class="modalidade-pair">
+                                <div class="modalidade-header">Cartão</div>
+                                <div class="modalidade-value" id="modal-cartao">0</div>
+                            </div>
+                            <div class="modalidade-pair">
+                                <div class="modalidade-header">Numerário</div>
+                                <div class="modalidade-value" id="modal-numerario">0</div>
+                            </div>
+                            <div class="modalidade-pair">
+                                <div class="modalidade-header">Agência</div>
+                                <div class="modalidade-value" id="modal-agencia">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" id="modalidade-footer">Exibe quantidade de lançamentos</div>
+                </div>
+            </div>
         </aside>
 
         <!-- Main Content -->
@@ -81,29 +112,6 @@
                             </div>
                             <div class="card-value" id="ticket-medio">R$ 0,00</div>
                             <div class="card-footer">Valor médio por transação</div>
-                        </div>
-
-                        <div class="card card-modal">
-                            <div class="card-header">
-                                <h3 class="card-title">Modalidades</h3>
-                                <span class="card-icon">🎫</span>
-                            </div>
-                            <div class="modalidade-panel">
-                                <div class="option-buttons">
-                                    <button id="btn-modal-quantidade" class="option-button active">Quantidade</button>
-                                    <button id="btn-modal-valor" class="option-button">Valor</button>
-                                </div>
-                                <div class="modalidade-grid">
-                                    <div class="modalidade-header">Cartão</div>
-                                    <div class="modalidade-header">Numerário</div>
-                                    <div class="modalidade-header">Agência</div>
-
-                                    <div class="modalidade-value" id="modal-cartao">0</div>
-                                    <div class="modalidade-value" id="modal-numerario">0</div>
-                                    <div class="modalidade-value" id="modal-agencia">0</div>
-                                </div>
-                            </div>
-                            <div class="card-footer" id="modalidade-footer">Exibe quantidade de lançamentos</div>
                         </div>
                     </section>
 
@@ -175,7 +183,8 @@
                                     <input type="date" id="date-range-start">
                                     <label for="date-range-end">Até:</label>
                                     <input type="date" id="date-range-end">
-                                    <button id="btn-filtrar-mensal">Filtrar</button>
+                                    <button id="btn-filtrar-mensal">🔍 Filtrar</button>
+                                    <button id="btn-limpar-periodo" class="btn-clear-period">✕ Limpar Período</button>
                                 </div>
                                 <canvas id="chart-mensal"></canvas>
                                 <div class="chart-legend" id="legend-mensal"></div>
