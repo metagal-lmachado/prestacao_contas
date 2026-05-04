@@ -1108,29 +1108,69 @@ function fecharModal() {
 
 // Exportar CSV
 function exportarCSV() {
-    let csv = 'Data,Funcionário,Departamento,Modalidade,Categoria,Descrição,Valor\n';
+    // Preparar dados para exportação
+    const dados_exportacao = [];
     
+    // Adicionar cabeçalho
+    dados_exportacao.push({
+        'Data': '',
+        'Funcionário': '',
+        'Departamento': '',
+        'Modalidade': '',
+        'Categoria': '',
+        'Descrição': '',
+        'Valor': ''
+    });
+    
+    // Remover linha de cabeçalho
+    dados_exportacao.pop();
+    
+    // Adicionar dados
     dadosFiltrados.forEach(d => {
         const data = parseDataBR(d.data);
         const dataFormatada = data ? data.toLocaleDateString('pt-BR') : d.data;
-        const valor = parseNumero(d.valor).toLocaleString('pt-BR', { 
-            minimumFractionDigits: 2, 
-            maximumFractionDigits: 2 
+        const valor = parseNumero(d.valor);
+        
+        dados_exportacao.push({
+            'Data': dataFormatada,
+            'Funcionário': d.nome_funcionario,
+            'Departamento': d.departamento,
+            'Modalidade': d.modalidade,
+            'Categoria': d.categoria_despesa,
+            'Descrição': d.descricao_despesa,
+            'Valor': valor
         });
-        csv += `${dataFormatada},${d.nome_funcionario},${d.departamento},${d.modalidade},${d.categoria_despesa},"${d.descricao_despesa}",${valor}\n`;
     });
-
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
     
-    link.setAttribute('href', url);
-    link.setAttribute('download', `despesas_viagem_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
+    // Criar workbook e worksheet
+    const ws = XLSX.utils.json_to_sheet(dados_exportacao);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Lançamentos');
     
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Ajustar largura das colunas
+    const colWidths = [
+        { wch: 12 },  // Data
+        { wch: 20 },  // Funcionário
+        { wch: 18 },  // Departamento
+        { wch: 20 },  // Modalidade
+        { wch: 20 },  // Categoria
+        { wch: 30 },  // Descrição
+        { wch: 15 }   // Valor
+    ];
+    ws['!cols'] = colWidths;
+    
+    // Formatar coluna de valores como moeda
+    const lastRow = dados_exportacao.length;
+    for (let i = 2; i <= lastRow; i++) {
+        const cellRef = `G${i}`;
+        if (ws[cellRef]) {
+            ws[cellRef].z = '#,##0.00';
+        }
+    }
+    
+    // Fazer download
+    const nomeArquivo = `despesas_viagem_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, nomeArquivo);
 }
 
 // Mudar de página (Dashboard/Lançamentos)
