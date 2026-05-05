@@ -42,10 +42,10 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 250px;
+    width: 280px;
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     color: white;
-    padding: 20px;
+    padding: 14px;
     overflow-y: auto;
     box-shadow: var(--shadow);
     z-index: 100;
@@ -53,9 +53,9 @@ body {
 }
 
 .sidebar-header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {
@@ -125,28 +125,29 @@ body {
 .sidebar-periodo .card {
     background: rgba(255, 255, 255, 0.95);
     color: var(--text-dark);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 14px;
 }
 
 .sidebar-periodo {
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 .periodo-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .periodo-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .periodo-input {
-    padding: 10px 12px;
+    padding: 8px 10px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: white;
@@ -161,20 +162,20 @@ body {
 
 .periodo-actions {
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
+    gap: 8px;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .btn-apply-periodo,
 .btn-clear-periodo {
-    padding: 10px 14px;
+    padding: 8px 12px;
     border-radius: 8px;
     border: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition);
-    min-width: 100px;
+    min-width: 90px;
 }
 
 .btn-apply-periodo {
@@ -361,13 +362,17 @@ body {
 .card {
     background: white;
     border-radius: 12px;
-    padding: 18px;
+    padding: 16px;
     box-shadow: var(--shadow);
     transition: var(--transition);
     border: 1px solid var(--border-color);
     animation: slideUp 0.5s ease-out;
     min-height: 0;
     line-height: 1;
+}
+
+.card-modal {
+    padding: 14px;
 }
 
 .card-header {
@@ -397,8 +402,16 @@ body {
     flex-direction: column;
     gap: 6px;
     margin: 0;
-    min-width: 140px;
     line-height: 1;
+}
+
+.option-button {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+}
+
+.option-button.active {
+    padding: 8px 10px;
 }
 
 .modalidade-panel {
@@ -418,8 +431,8 @@ body {
 .modalidade-pair {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 14px 16px;
+    gap: 8px;
+    padding: 12px 14px;
     background: rgba(45, 80, 22, 0.06);
     border-radius: 12px;
 }
@@ -429,10 +442,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: 8px 10px;
     border-radius: 10px;
     line-height: 1;
-    min-height: 46px;
+    min-height: 42px;
 }
 
 .modalidade-header {
