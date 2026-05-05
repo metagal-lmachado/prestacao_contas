@@ -33,6 +33,28 @@
                 </ul>
             </nav>
 
+            <div class="sidebar-periodo">
+                <div class="card card-periodo">
+                    <div class="card-header">
+                        <h3 class="card-title">Filtro de Período</h3>
+                    </div>
+                    <div class="periodo-grid">
+                        <div class="periodo-item">
+                            <label for="sidebar-date-start" class="filter-label">De</label>
+                            <input type="date" id="sidebar-date-start" class="periodo-input">
+                        </div>
+                        <div class="periodo-item">
+                            <label for="sidebar-date-end" class="filter-label">Até</label>
+                            <input type="date" id="sidebar-date-end" class="periodo-input">
+                        </div>
+                    </div>
+                    <div class="periodo-actions">
+                        <button id="btn-aplicar-periodo" class="btn-apply-periodo">Aplicar</button>
+                        <button id="btn-limpar-periodo-sidebar" class="btn-clear-periodo">Limpar</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Modalidades Card in Sidebar -->
             <div class="sidebar-modal">
                 <div class="card card-modal">

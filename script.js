@@ -105,9 +105,32 @@ function calcularDatasMensal() {
     if (datas.length > 0) {
         mensalStart = datas[0];
         mensalEnd = datas[datas.length - 1];
-        document.getElementById('date-range-start').value = mensalStart.toISOString().split('T')[0];
-        document.getElementById('date-range-end').value = mensalEnd.toISOString().split('T')[0];
+        atualizarInputsPeriodo();
     }
+}
+
+function atualizarInputsPeriodo() {
+    const startValue = mensalStart ? mensalStart.toISOString().split('T')[0] : '';
+    const endValue = mensalEnd ? mensalEnd.toISOString().split('T')[0] : '';
+
+    ['date-range-start', 'sidebar-date-start'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = startValue;
+    });
+    ['date-range-end', 'sidebar-date-end'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = endValue;
+    });
+}
+
+function atualizarPeriodoPorIds(startInputId, endInputId) {
+    const start = document.getElementById(startInputId).value;
+    const end = document.getElementById(endInputId).value;
+
+    mensalStart = start ? new Date(start + 'T00:00:00') : null;
+    mensalEnd = end ? new Date(end + 'T23:59:59') : null;
+    atualizarInputsPeriodo();
+    aplicarFiltros();
 }
 
 function decodeTextBuffer(buffer) {
@@ -291,8 +314,10 @@ function inicializarEventos() {
     document.getElementById('btn-export-csv').addEventListener('click', exportarCSV);
     document.getElementById('btn-prev-page').addEventListener('click', paginaAnterior);
     document.getElementById('btn-next-page').addEventListener('click', proximaPagina);
-    document.getElementById('btn-filtrar-mensal').addEventListener('click', filtrarMensal);
+    document.getElementById('btn-filtrar-mensal').addEventListener('click', () => atualizarPeriodoPorIds('date-range-start', 'date-range-end'));
     document.getElementById('btn-limpar-periodo').addEventListener('click', limparPeriodo);
+    document.getElementById('btn-aplicar-periodo')?.addEventListener('click', () => atualizarPeriodoPorIds('sidebar-date-start', 'sidebar-date-end'));
+    document.getElementById('btn-limpar-periodo-sidebar')?.addEventListener('click', limparPeriodo);
 
     // Modal
     document.querySelector('.modal-close').addEventListener('click', fecharModal);
@@ -323,11 +348,7 @@ function inicializarEventos() {
 
 // Filtrar mensal
 function filtrarMensal() {
-    const start = document.getElementById('date-range-start').value;
-    const end = document.getElementById('date-range-end').value;
-    mensalStart = start ? new Date(start + 'T00:00:00') : null;
-    mensalEnd = end ? new Date(end + 'T23:59:59') : null;
-    aplicarFiltros();
+    atualizarPeriodoPorIds('date-range-start', 'date-range-end');
 }
 
 // Limpar período selecionado
@@ -384,9 +405,9 @@ function aplicarFiltros() {
 
         // Incluir filtro de período
         let matchPeriodo = true;
-        if (mensalStart && mensalEnd) {
+        if (mensalStart || mensalEnd) {
             const data = parseDataBR(d.data);
-            matchPeriodo = data && data >= mensalStart && data <= mensalEnd;
+            matchPeriodo = data && (!mensalStart || data >= mensalStart) && (!mensalEnd || data <= mensalEnd);
         }
 
         return matchCategoria && matchDepartamento && matchFuncionario && matchModalidade && matchBusca && matchPeriodo;
@@ -897,13 +918,18 @@ function atualizarGraficoModalidade() {
                     formatter: (value, ctx) => {
                         let sum = 0;
                         ctx.dataset.data.forEach(v => sum += v);
-                        return ((value / sum) * 100).toFixed(1) + '%';
+                        return value > 0 ? ((value / sum) * 100).toFixed(1) + '%' : '';
                     },
                     color: '#fff',
                     font: {
-                        size: 14,
+                        size: 16,
                         weight: 'bold'
-                    }
+                    },
+                    anchor: 'center',
+                    align: 'center',
+                    clamp: true,
+                    offset: 0,
+                    display: (ctx) => ctx.dataset.data[ctx.dataIndex] > 0
                 }
             }
         }
